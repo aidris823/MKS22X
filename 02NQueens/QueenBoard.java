@@ -85,7 +85,21 @@ public class QueenBoard{
 	    resetBoard();
 	    return false;
 	}
-	return true;
+	return solveHelper(0);
+    }
+    private boolean solveHelper(int col){
+	if (col >= size){
+	    return true;
+	}
+	for (int i = col; i < size; i++){
+	    if (addQueen(i,col)){
+		if (solveR(col + 1)){
+		    return true;
+		}
+	    }
+	    removeQueen(i,col);
+	    return false;
+	}
     }
 
     // Returns number of solutions and fills board with zeros.
