@@ -20,6 +20,13 @@ public class QueenBoard{
 	return true;
     }
     private boolean removeQueen(int r, int c){
+	board[r][c] = 0;
+	for (int i = 1; i < (size - r); i++){
+	    board[r+i][c] -= 1;
+	}
+	for (int i = 1; i < (size - c); i++){
+	    board[r][c+i] -= 1;
+	}
 	return true;
     }
 
@@ -38,12 +45,23 @@ public class QueenBoard{
 	String ans = "";
 	for (int i = 0; i < size; i++){
 	    for (int j = 0; j < size; j++){
-		if (board[i][j] != -1){
+		if (board[i][j] > -1){
 		    ans += "_ ";
 		}
-		if (board[i][j] == -1){
+		if (board[i][j] <= -1){
 		    ans += "Q ";
 		}
+	    }
+	    ans += "\n";
+	}
+	return ans;
+    }
+
+    public String toStringNums(){
+	String ans = "";
+	for (int i = 0; i < size; i++){
+	    for (int j = 0; j < size; j++){
+		ans += "" + board[i][j];
 	    }
 	    ans += "\n";
 	}
@@ -88,7 +106,26 @@ public class QueenBoard{
 	System.out.println(daBoard2.toString());
 	System.out.println(daBoard3.toString());
 	System.out.println(daBoard4.toString());
-		
+	System.out.println(daBoard1.toStringNums());
+	System.out.println(daBoard2.toStringNums());
+	System.out.println(daBoard3.toStringNums());
+	System.out.println(daBoard4.toStringNums());
+
+	//Test adding:
+	daBoard1.addQueen(0,0);
+	System.out.println(daBoard1.toString());
+	System.out.println(daBoard1.toStringNums());
+	daBoard2.addQueen(1,0);
+	System.out.println(daBoard2.toString());
+	System.out.println(daBoard2.toStringNums());
+	daBoard2.addQueen(1,1);
+	System.out.println(daBoard2.toString());
+
+	//Test removing:
+	daBoard1.removeQueen(0,0);
+	System.out.println(daBoard1.toString());
+	daBoard2.removeQueen(1,0);
+	System.out.println(daBoard2.toString());
 	
 	
 	
