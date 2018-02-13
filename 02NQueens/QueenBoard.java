@@ -11,12 +11,11 @@ public class QueenBoard{
     //Suggested Private Methods:
     private boolean addQueen(int r, int c){
 	board[r][c] = -1;
-	for (int i = 1; i < (size-r); i++){
-	    board[r+i][c] += 1;
+	int counter = 1;
+	for (int i = c + 1; i < size; i++){
+	    board[r][i]++;
 	}
-	for (int i = 1; i < (size-c); i++){
-	    board[r][c+i] += 1;
-	}
+	for (int i = 
 	return true;
     }
     private boolean removeQueen(int r, int c){
