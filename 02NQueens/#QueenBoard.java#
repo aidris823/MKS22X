@@ -160,7 +160,10 @@ public class QueenBoard {
 	}
 	return false;
     }
-    
+
+    public int countSolutions(){
+	
+    }
 	
     public static void main(String[] arguments) {
 	QueenBoard daBoard = new QueenBoard(8);
