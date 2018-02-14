@@ -173,11 +173,13 @@ public class QueenBoard {
 	return false;
     }
 
+    //What is the premise of this problem?
     public int countSolutions(){
 	if (size == 2 || size == 3){
 	    return 0;
 	}
-	return 0;
+	resetBoard();
+	return size;
     }
 	
     public static void main(String[] arguments){
