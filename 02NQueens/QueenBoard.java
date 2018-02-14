@@ -1,146 +1,148 @@
-public class QueenBoard{
-    private int[][] board;
-    private int size;
-
-    public QueenBoard(int size){
-	this.size = size;
-	board = new int[size][size];
-	resetBoard();
-    }
-
-    //Suggested Private Methods:
-    private boolean addQueen(int r, int c){
-	board[r][c] = -1;
-	int counter = 1;
-	for (int i = c + 1; i < size; i++){
-	    board[r][i]++;
+public class QueenBoard {
+	
+	private int[][] board;
+	private int size; 
+	
+	//Constructor:
+	public QueenBoard(int size) {
+		board = new int[size][size];
+		this.size = size;
+		resetBoard();
 	}
-	for (int i = 
-	return true;
-    }
-    private boolean removeQueen(int r, int c){
-	board[r][c] = 0;
-	for (int i = 1; i < (size - r); i++){
-	    board[r+i][c] -= 1;
-	}
-	for (int i = 1; i < (size - c); i++){
-	    board[r][c+i] -= 1;
-	}
-	return true;
-    }
-
-    /* Returns in format:
-
-       All numbers that are Queens is replaced with "Q".
-       All others are displayed as underscores "_".
-       There are spaces in between each symbol:
-
-       _ _ Q _ 
-       Q _ _ _ 
-       _ _ _ Q
-       _ Q _ _
-    */
-    public String toString(){
-	String ans = "";
-	for (int i = 0; i < size; i++){
-	    for (int j = 0; j < size; j++){
-		if (board[i][j] > -1){
-		    ans += "_ ";
+	
+	//Sets all squares in the board to equal 0. (Hard reset)
+	private void resetBoard() {
+		for (int i = 0; i < size; i++) {
+			for (int j = 0; j < size; j++) {
+				board[i][j] = 0;
+			}
 		}
-		if (board[i][j] <= -1){
-		    ans += "Q ";
+	}
+	
+	/* Adds a Queen to a specific square.  
+	 OUTLINE:
+	 
+	 First check if the Queen would be threatened at that square (horizontally
+	 right-up and horizontally right-down.
+	 
+	 If it is, then immediately return false.
+	 If not, then carry on:
+	 
+	 Square that gets the Queen gets -1.
+	 All horizontal right squares get += 1.
+	 All diagonal up squares get += 1.
+	 All diagonal down squares get += 1.
+	 
+	 */
+	
+	private boolean addQueen(int r, int c){
+
+		//Is the Queen safe there?
+		if (!isQueenSafe(r,c)) {
+			return isQueenSafe(r,c);
 		}
-	    }
-	    ans += "\n";
-	}
-	return ans;
-    }
-
-    public String toStringNums(){
-	String ans = "";
-	for (int i = 0; i < size; i++){
-	    for (int j = 0; j < size; j++){
-		ans += "" + board[i][j];
-	    }
-	    ans += "\n";
-	}
-	return ans;
-    }
-
-    private void resetBoard(){
-	for (int i = 0; i < size; i++){
-	    for (int j = 0; j < size; j++){
-		board[i][j] = 0;
-	    }
-	}
-    }
 		
-
-    /* Returns false if board is not solvable and fills board with 0's.
-       Returns true if board is solvable and solves the board.
-    */
-    public boolean solve(){
-	if (countSolutions() == 0){
-	    resetBoard();
-	    return false;
-	}
-	return solveHelper(0);
-    }
-    private boolean solveHelper(int col){
-	if (col >= size){
-	    return true;
-	}
-	for (int i = col; i < size; i++){
-	    if (addQueen(i,col)){
-		if (solveR(col + 1)){
-		    return true;
+		board[r][c] = -1;
+		//Just return true if you're in the last column.
+		if (c == size - 1) {
+			return true;
 		}
-	    }
-	    removeQueen(i,col);
-	    return false;
+		//Horizontal:
+		for (int i = c + 1; i < size; i++) {
+			board[r][i]++;
+		}
+		//Diagonal up AND down:
+		for (int i = 1; i < size; i++) {
+			try {
+				board[r+i][c+i]++;
+				board[r-i][c+i]++;
+			}
+		catch(ArrayIndexOutOfBoundsException e) {
+				//Do nothing
+			}
+		}
+		return true;
 	}
-    }
-
-    // Returns number of solutions and fills board with zeros.
-    public int countSolutions(){
-	resetBoard();
-	if (board.length == 2 || board.length == 1){
-	    return 0;
+	
+	/*Helper function that sees if two -1's face each other.
+	(Precondition: board[r][c] == -1)
+	
+	Only checks horizontal right, diagonal right-up, and diagonal-right down.
+	*/
+	private boolean isQueenSafe(int r, int c) {
+		//Horizontal
+		for (int i = c; i < size; i++) {
+			if (board[r][i] == -1) {
+				return false;
+			}
+		}
+		for (int i = 1; i < size; i++) {
+			try {
+				if (/* Diagonal down */ board[r+i][c+i] == -1 
+				|| /*Diagonal up */ board[r-i][c+i] == -1) {
+					return false;
+				}
+			}
+			catch(ArrayIndexOutOfBoundsException e) {
+				//Do nothing
+			}
+		}
+		return true;
 	}
-	return board.length;
-    }
-
-    public static void main(String[] arguments){
-	QueenBoard daBoard1 = new QueenBoard(1);
-	QueenBoard daBoard2 = new QueenBoard(2);
-	QueenBoard daBoard3 = new QueenBoard(3);
-	QueenBoard daBoard4 = new QueenBoard(4);
-	System.out.println(daBoard1.toString());
-	System.out.println(daBoard2.toString());
-	System.out.println(daBoard3.toString());
-	System.out.println(daBoard4.toString());
-	System.out.println(daBoard1.toStringNums());
-	System.out.println(daBoard2.toStringNums());
-	System.out.println(daBoard3.toStringNums());
-	System.out.println(daBoard4.toStringNums());
-
-	//Test adding:
-	daBoard1.addQueen(0,0);
-	System.out.println(daBoard1.toString());
-	System.out.println(daBoard1.toStringNums());
-	daBoard2.addQueen(1,0);
-	System.out.println(daBoard2.toString());
-	System.out.println(daBoard2.toStringNums());
-	daBoard2.addQueen(1,1);
-	System.out.println(daBoard2.toString());
-
-	//Test removing:
-	daBoard1.removeQueen(0,0);
-	System.out.println(daBoard1.toString());
-	daBoard2.removeQueen(1,0);
-	System.out.println(daBoard2.toString());
 	
+	private boolean removeQueen(int r, int c) {
+		board[r][c] = 0;
+		//Just return true if you're in the last column.
+		//Horizontal:
+		for (int i = c + 1; i < size; i++) {
+			board[r][i]--;
+		}
+		//Diagonal up AND down:
+		for (int i = 1; i < size; i++) {
+			try {
+				board[r+i][c+i]--;
+				board[r-i][c+i]--;
+			}
+		catch(ArrayIndexOutOfBoundsException e) {
+				//Do nothing
+			}
+		}
+		return true;
+	}
 	
+	public String toString() {
+		String ans = "";
+		for (int i = 0; i < size; i++) {
+			for (int j = 0; j < size; j++) {
+				if (board[i][j] == -1) {
+					ans += "Q ";
+				}
+				else {
+					ans += "_ ";
+				}
+			}
+			ans += "\n";
+		}
+		return ans;
+	}
+	public String threatCheck() {
+		String ans = "";
+		for (int i = 0; i < size; i++) {
+			for (int j = 0; j < size; j++) {
+				ans += board[i][j] + " ";
+				}
+			ans += "\n";
+			}
+		return ans;
+	}
 	
-    }
+	public static void main(String[] arguments) {
+		QueenBoard daBoard = new QueenBoard(8);
+		daBoard.addQueen(2, 3);
+		System.out.println(daBoard.toString());
+		System.out.println(daBoard.threatCheck());
+		daBoard.addQueen(0,4);
+		System.out.println(daBoard.toString());
+		System.out.println(daBoard.threatCheck());
+	}
 }
