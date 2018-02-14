@@ -36,10 +36,12 @@ public class QueenBoard {
     */
 	
     private boolean addQueen(int r, int c){
-
+	if (board[r][c] != 0){
+	    return false;
+	}
 	//Is the Queen safe there?
 	if (!isQueenSafe(r,c)) {
-	    return isQueenSafe(r,c);
+	    return false;
 	}
 		
 	board[r][c] = -1;
@@ -144,6 +146,13 @@ public class QueenBoard {
 	    resetBoard();
 	    return false;
 	}
+	for (int i = 0; i < size; i++){
+	    for (int j = 0; j < size; j++){
+		if (board[i][j] != 0){
+		    throw new IllegalStateException();
+		}
+	    }
+	}
 	return solveHelper(0);
     }
     public boolean solveHelper(int col){
@@ -165,6 +174,9 @@ public class QueenBoard {
     }
 
     public int countSolutions(){
+	if (size == 2 || size == 3){
+	    return 0;
+	}
 	return 0;
     }
 	
@@ -191,5 +203,14 @@ public class QueenBoard {
 	mamedyarov.removeQueen(4,5);
 	System.out.println(mamedyarov.toString());
 	System.out.println(mamedyarov.threatCheck());
+	System.out.println(mamedyarov.solve());
+	System.out.println(mamedyarov.toString());
+	System.out.println(mamedyarov.threatCheck());
+	QueenBoard carlsen = new QueenBoard(10);
+	System.out.println(carlsen.toString());
+	System.out.println(carlsen.threatCheck());
+	System.out.println(carlsen.solve());
+	System.out.println(carlsen.toString());
+	System.out.println(carlsen.threatCheck());
     }
 }
