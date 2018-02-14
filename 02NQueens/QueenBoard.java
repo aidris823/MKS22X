@@ -36,9 +36,11 @@ public class QueenBoard {
     */
 	
     private boolean addQueen(int r, int c){
+	
 	if (board[r][c] != 0){
 	    return false;
 	}
+	
 	//Is the Queen safe there?
 	if (!isQueenSafe(r,c)) {
 	    return false;
@@ -57,11 +59,17 @@ public class QueenBoard {
 	for (int i = 1; i < size; i++) {
 	    try {
 		board[r+i][c+i]++;
-		board[r-i][c+i]++;
 	    }
 	    catch(ArrayIndexOutOfBoundsException e) {
 		//Do nothing
 	    }
+	    try{
+		board[r-i][c+i]++;
+	    }
+	    catch(ArrayIndexOutOfBoundsException e){
+		//Don't do anythng
+	    }
+	   
 	}
 	return true;
     }
@@ -106,9 +114,14 @@ public class QueenBoard {
 	for (int i = 1; i < size; i++) {
 	    try {
 		board[r+i][c+i]--;
-		board[r-i][c+i]--;
 	    }
 	    catch(ArrayIndexOutOfBoundsException e) {
+		//Do nothing
+	    }
+	    try{
+		board[r-i][c+i]--;
+	    }
+	    catch(ArrayIndexOutOfBoundsException e){
 		//Do nothing
 	    }
 	}
