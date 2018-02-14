@@ -91,6 +91,9 @@ public class QueenBoard {
     }
 	
     private boolean removeQueen(int r, int c) {
+	if (board[r][c] != -1){
+	    return false;
+	}
 	board[r][c] = 0;
 	//Just return true if you're in the last column.
 	//Horizontal:
@@ -150,22 +153,23 @@ public class QueenBoard {
 	    return true;
 	}
 
-	for (int row = 0; i < size; i++){
+	for (int row = 0; row < size; row++){
 	    if (addQueen(row,col)){
 		if (solveHelper(col+1)){
 		    return true;
 		}
+	    removeQueen(row,col);
 	    }
-	    removeQueen(i,col);
 	}
 	return false;
     }
 
     public int countSolutions(){
-	
+	return 0;
     }
 	
-    public static void main(String[] arguments) {
+    public static void main(String[] arguments){
+	/*
 	QueenBoard daBoard = new QueenBoard(8);
 	daBoard.addQueen(2, 3);
 	System.out.println(daBoard.toString());
@@ -175,34 +179,17 @@ public class QueenBoard {
 	System.out.println(daBoard.threatCheck());
 	QueenBoard b = new QueenBoard(4);
 
-	System.out.println(b.solve()); //prints true
-	System.out.println(b); //prints a valid solution
-
-	try{
-	    b.solve();
-	}catch(IllegalStateException e){
-	    System.out.println("Error: The board contains non-zero values");
-	} //prints "Error: The board contains non-zero values"
-
-	try{
-	    b.countSolutions();
-	}catch(IllegalStateException e){
-	    System.out.println("Error: The board contains non-zero values");
-	} //prints "Error: The board contains non-zero values"
-
-	for (int i = 0; i < 12; i++){
-	    QueenBoard a = new QueenBoard(i);
-	    System.out.println("# of Solutions for " + i + ": " + a.countSolutions());
-	    /*          Expected Values
-			i --> # of Solutions   i --> # of Solutions
-			0 --> 1                      6 --> 4
-			1 --> 1                      7 --> 40
-			2 --> 0                      8 --> 92
-			3 --> 0                      9 --> 352
-			4 --> 2                    10 --> 724
-			5 --> 10                  11 --> 2680
-	    */
-	    System.out.println(a); //prints out an empty i by i grid of underscores
-	}
+	QueenBoard board = new QueenBoard(8);
+	board.solve();
+	System.out.println(board.toString());
+	System.out.println(board.threatCheck());
+	*/
+	QueenBoard mamedyarov = new QueenBoard(8);
+	mamedyarov.addQueen(4,5);
+	System.out.println(mamedyarov.toString());
+	System.out.println(mamedyarov.threatCheck());
+	mamedyarov.removeQueen(4,5);
+	System.out.println(mamedyarov.toString());
+	System.out.println(mamedyarov.threatCheck());
     }
 }
