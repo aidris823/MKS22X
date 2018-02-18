@@ -186,16 +186,37 @@ public class QueenBoard {
 	return false;
     }
 
-    //What is the premise of this problem?
+    //Counts number of possible solutions, I think.
     public int countSolutions(){
 	if (size == 2 || size == 3){
 	    return 0;
 	}
 	resetBoard();
-	return size;
+	for (int i = 0; i < size; i++){
+	    for (int j = 0; j < size; j++){
+		if (board[i][j] != 0){
+		    throw new IllegalStateException();
+		}
+	    }
+	}
+	return countSolutionsHelper(0,1) - 1;
+    }
+    //Helper function:
+    public int countSolutionsHelper(int col, int counter){
+	if (col == size){
+	    return 1;
+	}
+	for (int i = 0; i < size; i++){
+	    if (addQueen(i,col)){
+		counter += countSolutionsHelper(col+1,0); 
+	    }
+	    removeQueen(i,col);
+	}
+	return counter;
     }
 	
     public static void main(String[] arguments){
+	
 	/*
 	QueenBoard daBoard = new QueenBoard(8);
 	daBoard.addQueen(2, 3);
@@ -221,11 +242,13 @@ public class QueenBoard {
 	System.out.println(mamedyarov.solve());
 	System.out.println(mamedyarov.toString());
 	System.out.println(mamedyarov.threatCheck());
+	System.out.println(mamedyarov.countSolutions()); //Should return 92, according to NumberPhile's video on the 8 by 8 NQueens problem.
 	QueenBoard carlsen = new QueenBoard(10);
 	System.out.println(carlsen.toString());
 	System.out.println(carlsen.threatCheck());
 	System.out.println(carlsen.solve());
 	System.out.println(carlsen.toString());
 	System.out.println(carlsen.threatCheck());
+	System.out.println(carlsen.countSolutions());
     }
 }
