@@ -28,7 +28,7 @@ public class Recursion{
     //Helper function that actually does the Fibonacci sequence:
     public int fibHelper(int numLoop, int n, int prev, int morePrev){
 	if (numLoop == n){
-	    return prev;
+	    return morePrev;
 	}
 	//The num loop (what current num youre on in the Fibonacci sequence) increases.
 	numLoop++;
