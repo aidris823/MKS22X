@@ -2,10 +2,8 @@ public class KnightBoard{
     private int[][] board;
     private int rowSize;
     private int colSize;
-    private int[] pR = new int[]{-2, -2, 1, 1, 2, 2, -1,-1};
-    private int[] pC = new int[]{ 1, -1, 2,-2, 1,-1, -2, 2};
-
-    private int[] prevCoordinates = new int[]{-1,1};
+    private int[] pR = new int[]{-2, -2, 2, 2, -1, -1, 1, 1};
+    private int[] pC = new int[]{ 1, -1, 1, -1, 2, -2, 2, -2};
     
     //Constructor:
     public KnightBoard(int startingRows,int startingCols){
@@ -26,8 +24,9 @@ public class KnightBoard{
 		board[i][j] = 0;
 	    }	}
     }
-
+    
     //Solves Knight tour?
+    
     public boolean solve(int startingRow, int startingCol){
 	
 	for (int i = 0; i < rowSize; i++){
@@ -43,30 +42,37 @@ public class KnightBoard{
 	
 	return solveHelper(startingRow, startingCol, 1);
     }
-    //It gets by with a little help from its friends (or just one friend in
+    //Solve gets by with a little help from its friends (or just one friend in
     //this case)
     public boolean solveHelper(int row, int col, int level){
-	int[][] legalMoves = getLegalMoves(row,col);
-	//Base cases
-	if (level == rowSize * colSize){
+	if (level == rowSize * colSize && board[row][col] == 0){
+	    board[row][col] = level;
 	    return true;
 	}
-	if (legalMoves.length == 0 && level != rowSize * colSize){
+	int[][] legalMoves = getLegalMoves(row,col);
+	if (legalMoves.length == 0){
 	    return false;
 	}
-	if (board[row][col] == 0){
-	    board[row][col] = level;
-	    for (int i = 0; i < 8; i++){
-		if (solveHelper(legalMoves[i][0],legalMoves[i][1],level+1)){
+		
+	for (int i = 0; i < legalMoves.length; i++){
+	    if (board[legalMoves[i][0]][legalMoves[i][1]] == 0){
+		board[row][col] = level;
+		if(solveHelper(legalMoves[i][0],legalMoves[i][1], level + 1)){
 		    return true;
+		}
+		else{
+		    board[row][col] = 0;
 		}
 	    }
 	}
 	return false;
-    }
+    }   
+		
+		
+		
+			    
+    
        
-	
-
     //Helper functions that determines if a move is within bounds 
     private boolean isWithinBounds(int r, int c){
 	return (r > 0 && c > 0 && r < rowSize && c < colSize);
@@ -86,10 +92,10 @@ public class KnightBoard{
     //Returns an array of legal moves for the Knight.
     private int[][] getLegalMoves(int r, int c){
 	/*
-	Having eight legal moves is
-	only possible if it's the first move for the
-	Knight and it's not near a corner, 
-	but it's just to be safe.d
+	  Having eight legal moves is
+	  only possible if it's the first move for the
+	  Knight and it's not near a corner, 
+	  but it's just to be safe.
 	*/
 	
 	int[][] ans = new int[8][2];
@@ -106,7 +112,31 @@ public class KnightBoard{
     
     public boolean isSolvable(){
 	return !((rowSize < 3 && rowSize < 3) || (rowSize == 3 && colSize == 3));
+    }
+
+    public int countSolutions(int startingRow, int startingCol){
+	for (int i = 0; i < rowSize; i++){
+	    for (int j = 0; j < colSize; j++){
+		if (board[i][j] != 0){
+		    throw new IllegalStateException();
+		}
+	    }
 	}
+	if (!isWithinBounds(startingRow,startingCol)){
+	    throw new IllegalArgumentException();
+	}
+	if (!isSolvable()){
+	    return 0;
+	}
+	return countSolutionsHelper(startingRow, startingCol, 1, 1);
+    }
+    public int countSolutionsHelper(int r, int c, int level, int counter){
+	if (level > rowSize * colSize){
+	    return counter + 1;
+	}
+	// ??????
+	return counter;
+    }
 	
 	
         
@@ -118,11 +148,12 @@ public class KnightBoard{
 		if (board[i][j] == 0 || !isSolvable()){
 		    ans += "_ ";
 		}
+		
 		else if (board[i][j] > 0 && board[i][j] < 10){
-		    ans += " " + board[i][j];
+		    ans += " " + board[i][j] + " ";
 		}
 		else{
-		    ans += board[i][j];
+		    ans += board[i][j] + " ";
 		}
 	    }
 	    ans += "\n";
