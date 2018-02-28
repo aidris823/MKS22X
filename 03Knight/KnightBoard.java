@@ -44,24 +44,18 @@ public class KnightBoard{
 	return solveHelper(startingRow, startingCol, 1);
     }
     public boolean solveHelper(int row, int col, int level){
-
+	int[][] legalMoves = getLegalMoves(row,col);
 	//Base cases
-	if (level == row * col && board[row][col] == 0){
-	    board[row][col] = level;
+	if (level == row * col){
 	    return true;
 	}
 	if (!hasLegalSquare(row,col)){
 	    return false;
 	}
+	board[row][col] = level;
 	for (int i = 0; i < 8; i++){
-	    if (isWithinBounds(row + pR[i],col+pC[i])){
-		board[row][col] = level;
-		if (solveHelper(row + pR[i],col + pC[i], level + 1)){
-		    return true;
-		}
-		else{
-		board[row][col] = 0;
-		}
+	    if (solveHelper(legalMoves[i][0],legalMoves[i][1],level+1)){
+		return true;
 	    }
 	}
 	return false;
@@ -74,7 +68,7 @@ public class KnightBoard{
     private boolean isWithinBounds(int r, int c){
 	return (r > 0 && c > 0 && r < rowSize && c < colSize);
     }
-
+    
     //Sees if Knight currently has a legal square.
     private boolean hasLegalSquare(int r, int c){
 
@@ -85,31 +79,28 @@ public class KnightBoard{
 	}
 	return false;
     }
-    /*
-
+    
     //Returns an array of legal moves for the Knight.
     private int[][] getLegalMoves(int r, int c){
-	/*Having eight legal moves is
+	/*
+	Having eight legal moves is
 	only possible if it's the first move for the
 	Knight and it's not near a corner, 
 	but it's just to be safe.
+	*/
 	
-	int[][] ans = new int[8][1];
-	int[] legalMove = new int[2];
-	//pR = "Possible R", and so on for C. 
-	int[] pR = new int[]{-2, -2, 1, 1, 2, 2, -1,-1};
-	int[] pC = new int[]{ 1, -1, 2,-2, 1,-1, -2, 2};
+	int[][] ans = new int[8][2];
+       
 	for (int i = 0; i < 8; i++){
 	    if (isWithinBounds(r+pR[i],c+pC[i])
 		&& (board[r+pR[i]][c+pC[i]] == 0)){
-		legalMove[0] = r+pR[i];
-		legalMove[1] = c+pC[i];
-		ans[i] = legalMove;
+		ans[i][0] = r + pR[i];
+		ans[i][1] = c + pC[i];
 	    }
 	}
 	return ans;
     }
-    */
+    
     public boolean isSolvable(){
 	return !(rowSize == 2 || colSize == 2 || (rowSize == 3 && colSize == 3) || rowSize == 1 || colSize == 1);
 	}
@@ -120,6 +111,7 @@ public class KnightBoard{
 	String ans = "";
 	for (int i = 0; i < rowSize; i++){
 	    for (int j = 0; j < colSize; j++){
+		
 		if (board[i][j] == 0 || !isSolvable()){
 		    ans += "_ ";
 		}
