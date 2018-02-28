@@ -10,8 +10,22 @@ public class Maze{
 
     //Constructor
     public Maze(String filename){
+	rowCount = 0;
+	try{
+	    File f = new File(filename);
+	    Scanner in;
+	    while (in.hasNext()){
+		String line = in.nextLine);
+		colCount = line.length();
+	    }
+	}
+	catch (FileNotFoundException e){
+	    System.out.println("File not found: " + filename);
+	    System.out.exit(1);
+	}
 	
     }
+    
     private void wait(int millis){
 	try{
 	    Thread.sleep(millis);
@@ -27,6 +41,11 @@ public class Maze{
     public void clearTerminal(){
 	System.out.println("\033[2J\033[1;1H");
     }
+
+    public boolean hasStartAndEnd(){
+	int startCount = 0;
+	int endCount = 0;
+	for (int i = 0; i < 
 
     public int solve(){
 	//Find location of S."
