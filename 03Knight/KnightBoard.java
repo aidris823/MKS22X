@@ -16,13 +16,13 @@ public class KnightBoard{
 	rowSize = startingRows;
 	colSize = startingCols;
 	board = new int[rowSize][colSize];
-	resetBoard(rowSize,colSize);
+	resetBoard();
     }
 
     //Sets all values of the board to zero.
-    private void resetBoard(int r, int c){
-	for (int i = 0; i < r; i++){
-	    for (int j = 0; j < c; j++){
+    private void resetBoard(){
+	for (int i = 0; i < rowSize; i++){
+	    for (int j = 0; j < colSize; j++){
 		board[i][j] = 0;
 	    }	}
     }
@@ -43,17 +43,17 @@ public class KnightBoard{
 	
 	return solveHelper(startingRow, startingCol, 1);
     }
+    //It gets by with a little help from its friends (or just one friend in
+    //this case)
     public boolean solveHelper(int row, int col, int level){
 	int[][] legalMoves = getLegalMoves(row,col);
 	//Base cases
-	if (level == row * col){
+	if (level == rowSize * colSize){
 	    return true;
 	}
-	/*
-	if (!hasLegalSquare(row,col)){
+	if (legalMoves.length == 0 && level != rowSize * colSize){
 	    return false;
 	}
-	*/
 	if (board[row][col] == 0){
 	    board[row][col] = level;
 	    for (int i = 0; i < 8; i++){
@@ -62,16 +62,16 @@ public class KnightBoard{
 		}
 	    }
 	}
-	return false;	    
+	return false;
     }
        
 	
 
-    //Helper functions that determines if a move is within bounds:
+    //Helper functions that determines if a move is within bounds 
     private boolean isWithinBounds(int r, int c){
 	return (r > 0 && c > 0 && r < rowSize && c < colSize);
     }
-    /*
+    
     //Sees if Knight currently has a legal square.
     private boolean hasLegalSquare(int r, int c){
 
@@ -82,7 +82,7 @@ public class KnightBoard{
 	}
 	return false;
     }
-    */
+    
     //Returns an array of legal moves for the Knight.
     private int[][] getLegalMoves(int r, int c){
 	/*
@@ -105,7 +105,7 @@ public class KnightBoard{
     }
     
     public boolean isSolvable(){
-	return !(rowSize == 2 || colSize == 2 || (rowSize == 3 && colSize == 3) || rowSize == 1 || colSize == 1);
+	return !((rowSize < 3 && rowSize < 3) || (rowSize == 3 && colSize == 3));
 	}
 	
 	
