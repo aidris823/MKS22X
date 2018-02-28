@@ -49,17 +49,20 @@ public class KnightBoard{
 	if (level == row * col){
 	    return true;
 	}
+	/*
 	if (!hasLegalSquare(row,col)){
 	    return false;
 	}
-	board[row][col] = level;
-	for (int i = 0; i < 8; i++){
-	    if (solveHelper(legalMoves[i][0],legalMoves[i][1],level+1)){
-		return true;
+	*/
+	if (board[row][col] == 0){
+	    board[row][col] = level;
+	    for (int i = 0; i < 8; i++){
+		if (solveHelper(legalMoves[i][0],legalMoves[i][1],level+1)){
+		    return true;
+		}
 	    }
 	}
-	return false;
-		    
+	return false;	    
     }
        
 	
@@ -68,7 +71,7 @@ public class KnightBoard{
     private boolean isWithinBounds(int r, int c){
 	return (r > 0 && c > 0 && r < rowSize && c < colSize);
     }
-    
+    /*
     //Sees if Knight currently has a legal square.
     private boolean hasLegalSquare(int r, int c){
 
@@ -79,14 +82,14 @@ public class KnightBoard{
 	}
 	return false;
     }
-    
+    */
     //Returns an array of legal moves for the Knight.
     private int[][] getLegalMoves(int r, int c){
 	/*
 	Having eight legal moves is
 	only possible if it's the first move for the
 	Knight and it's not near a corner, 
-	but it's just to be safe.
+	but it's just to be safe.d
 	*/
 	
 	int[][] ans = new int[8][2];
