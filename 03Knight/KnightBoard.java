@@ -39,13 +39,13 @@ public class KnightBoard{
 	if (!isWithinBounds(startingRow,startingCol)){
 	    throw new IllegalArgumentException();
 	}
-	
+
 	return solveHelper(startingRow, startingCol, 1);
     }
     //Solve gets by with a little help from its friends (or just one friend in
     //this case)
     public boolean solveHelper(int row, int col, int level){
-	if (level == rowSize * colSize && board[row][col] == 0){
+	if (level == rowSize * colSize/* && board[row][col] == 0*/ ){
 	    board[row][col] = level;
 	    return true;
 	}
@@ -53,6 +53,9 @@ public class KnightBoard{
 	if (legalMoves.length == 0){
 	    return false;
 	}
+	if (board[row][col] != 0){
+	    return false;
+	}   
 		
 	for (int i = 0; i < legalMoves.length; i++){
 	    if (board[legalMoves[i][0]][legalMoves[i][1]] == 0){
@@ -66,7 +69,7 @@ public class KnightBoard{
 	    }
 	}
 	return false;
-    }   
+    }
 		
 		
 		
@@ -75,20 +78,20 @@ public class KnightBoard{
        
     //Helper functions that determines if a move is within bounds 
     private boolean isWithinBounds(int r, int c){
-	return (r > 0 && c > 0 && r < rowSize && c < colSize);
+	return (r >= 0 && c >= 0 && r < rowSize && c < colSize);
     }
-    
+    /*
     //Sees if Knight currently has a legal square.
     private boolean hasLegalSquare(int r, int c){
 
-	for (int i = 0; i < 8; i++){
-	    if (isWithinBounds(r+pR[i],c+pC[i]) && (board[r+pR[i]][c+pC[i]] == 0)){
-		return true;
-	    }
-	}
-	return false;
+    for (int i = 0; i < 8; i++){
+    if (isWithinBounds(r+pR[i],c+pC[i]) && (board[r+pR[i]][c+pC[i]] == 0)){
+    return true;
     }
-    
+    }
+    return false;
+    }
+    */
     //Returns an array of legal moves for the Knight.
     private int[][] getLegalMoves(int r, int c){
 	/*
@@ -105,6 +108,8 @@ public class KnightBoard{
 		&& (board[r+pR[i]][c+pC[i]] == 0)){
 		ans[i][0] = r + pR[i];
 		ans[i][1] = c + pC[i];
+		//	System.out.println("Legal Directions: \n" + pR[i] + ", " + pC[i] + "\n Legal Moves \n " + ans[i][0] + ", " + 
+		//			   ans[i][1]);
 	    }
 	}
 	return ans;
@@ -167,8 +172,9 @@ public class KnightBoard{
 	kasparov.solve(2,2);
 	System.out.println(kasparov.toString());
     }
-
 }
+
+   
 	       
 		
 		
