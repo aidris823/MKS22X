@@ -45,6 +45,10 @@ public class KnightBoard{
     //Solve gets by with a little help from its friends (or just one friend in
     //this case)
     public boolean solveHelper(int row, int col, int level){
+	if (board[row][col] != 0){
+	    return false;
+	}   
+	
 	if (level == rowSize * colSize/* && board[row][col] == 0*/ ){
 	    board[row][col] = level;
 	    return true;
@@ -53,12 +57,10 @@ public class KnightBoard{
 	if (legalMoves.length == 0){
 	    return false;
 	}
-	if (board[row][col] != 0){
-	    return false;
-	}   
-		
+	
 	for (int i = 0; i < legalMoves.length; i++){
-	    if (board[legalMoves[i][0]][legalMoves[i][1]] == 0){
+	    if (legalMoves[i][0] != row && legalMoves[i][1] != col && 
+		board[legalMoves[i][0]][legalMoves[i][1]] == 0){
 		board[row][col] = level;
 		if(solveHelper(legalMoves[i][0],legalMoves[i][1], level + 1)){
 		    return true;
@@ -111,6 +113,7 @@ public class KnightBoard{
 		//	System.out.println("Legal Directions: \n" + pR[i] + ", " + pC[i] + "\n Legal Moves \n " + ans[i][0] + ", " + 
 		//			   ans[i][1]);
 	    }
+       
 	}
 	return ans;
     }
