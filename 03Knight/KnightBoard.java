@@ -1,9 +1,10 @@
+import java.util.Arrays;
 public class KnightBoard{
     private int[][] board;
     private int rowSize;
     private int colSize;
     private int[] pR = new int[]{-2, -2, 2, 2, -1, -1, 1, 1};
-    private int[] pC = new int[]{ 1, -1, 1, -1, 2, -2, 2, -2};
+    private int[] pC = new int[]{ -1, 1, 1, -1, 2, -2, 2, -2};
     
     //Constructor:
     public KnightBoard(int startingRows,int startingCols){
@@ -59,15 +60,26 @@ public class KnightBoard{
 	}
 	
 	for (int i = 0; i < legalMoves.length; i++){
-	    if (legalMoves[i][0] != row && legalMoves[i][1] != col && 
+	    if (/*legalMoves[i][0] != row && legalMoves[i][1] != col && */
 		board[legalMoves[i][0]][legalMoves[i][1]] == 0){
 		board[row][col] = level;
-		if(solveHelper(legalMoves[i][0],legalMoves[i][1], level + 1)){
+		/*
+		if (level <= 5){
+		    System.out.println(toString());
+		    System.out.println("Legal Moves: \n" + Arrays.deepToString(getLegalMoves(row, col)));
+		}
+		*/
+		if (legalMoves[i][0] == 0 && legalMoves[i][1] == 0){
+		    if ((row == 1 && col == 2) || (row == 2 && col == 1)){
+			if(solveHelper(legalMoves[i][0],legalMoves[i][1], level + 1)){
+			    return true;
+			}
+		    }
+		}
+		else if(solveHelper(legalMoves[i][0],legalMoves[i][1], level + 1)){
 		    return true;
 		}
-		else{
-		    board[row][col] = 0;
-		}
+		board[row][col] = 0;
 	    }
 	}
 	return false;
@@ -142,7 +154,6 @@ public class KnightBoard{
 	if (level > rowSize * colSize){
 	    return counter + 1;
 	}
-	// ??????
 	return counter;
     }
 	
@@ -171,8 +182,8 @@ public class KnightBoard{
 
     public static void main(String[] arguments){
 	//I'm trying a 5 x 5 first and starting on [2,2]...because Wikipedia has an animation for that Knight tour.
-	KnightBoard kasparov = new KnightBoard(5,5);
-	kasparov.solve(2,2);
+	KnightBoard kasparov = new KnightBoard(7,7);
+	kasparov.solve(2,0);
 	System.out.println(kasparov.toString());
     }
 }
