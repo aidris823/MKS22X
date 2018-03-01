@@ -64,10 +64,10 @@ public class KnightBoard{
 		board[legalMoves[i][0]][legalMoves[i][1]] == 0){
 		board[row][col] = level;
 		/*
-		if (level <= 5){
-		    System.out.println(toString());
-		    System.out.println("Legal Moves: \n" + Arrays.deepToString(getLegalMoves(row, col)));
-		}
+		  if (level <= 5){
+		  System.out.println(toString());
+		  System.out.println("Legal Moves: \n" + Arrays.deepToString(getLegalMoves(row, col)));
+		  }
 		*/
 		if (legalMoves[i][0] == 0 && legalMoves[i][1] == 0){
 		    if ((row == 1 && col == 2) || (row == 2 && col == 1)){
@@ -148,44 +148,78 @@ public class KnightBoard{
 	if (!isSolvable()){
 	    return 0;
 	}
-	return countSolutionsHelper(startingRow, startingCol, 1, 1);
+	return countSolutionsHelper(startingRow, startingCol, 1);
     }
-    public int countSolutionsHelper(int r, int c, int level, int counter){
-	if (level > rowSize * colSize){
-	    return counter + 1;
+    public int countSolutionsHelper(int row, int col, int level){
+	int counter = 0;
+	if (board[row][col] != 0){
+	    return 0;
+	}   
+	
+	if (level == rowSize * colSize/* && board[row][col] == 0*/ ){
+	    board[row][col] = level;
+	    return 1;
 	}
+	int[][] legalMoves = getLegalMoves(row,col);
+	if (legalMoves.length == 0){
+	    return 0;
+	}
+	
+	for (int i = 0; i < legalMoves.length; i++){
+	    if (/*legalMoves[i][0] != row && legalMoves[i][1] != col && */
+		board[legalMoves[i][0]][legalMoves[i][1]] == 0){
+		board[row][col] = level;
+		/*
+		  if (level <= 5){
+		  System.out.println(toString());
+		  System.out.println("Legal Moves: \n" + Arrays.deepToString(getLegalMoves(row, col)));
+		  }
+		*/
+		if (legalMoves[i][0] == 0 && legalMoves[i][1] == 0){
+		    if ((row == 1 && col == 2) || (row == 2 && col == 1)){
+			counter += countSolutionsHelper(legalMoves[i][0],legalMoves[i][1], level + 1);
+		    }
+		}
+		else{
+		    counter += countSolutionsHelper(legalMoves[i][0],legalMoves[i][1], level + 1);
+		}		    
+	    }
+	    board[row][col] = 0;
+	}
+	
 	return counter;
     }
 	
 	
         
-    public String toString(){
-	String ans = "";
-	for (int i = 0; i < rowSize; i++){
-	    for (int j = 0; j < colSize; j++){
+public String toString(){
+    String ans = "";
+    for (int i = 0; i < rowSize; i++){
+	for (int j = 0; j < colSize; j++){
 		
-		if (board[i][j] == 0 || !isSolvable()){
-		    ans += "_ ";
-		}
-		
-		else if (board[i][j] > 0 && board[i][j] < 10){
-		    ans += " " + board[i][j] + " ";
-		}
-		else{
-		    ans += board[i][j] + " ";
-		}
+	    if (board[i][j] == 0 || !isSolvable()){
+		ans += "_ ";
 	    }
-	    ans += "\n";
+		
+	    else if (board[i][j] > 0 && board[i][j] < 10){
+		ans += " " + board[i][j] + " ";
+	    }
+	    else{
+		ans += board[i][j] + " ";
+	    }
 	}
-	return ans;
+	ans += "\n";
     }
+    return ans;
+}
 
-    public static void main(String[] arguments){
-	//I'm trying a 5 x 5 first and starting on [2,2]...because Wikipedia has an animation for that Knight tour.
-	KnightBoard kasparov = new KnightBoard(7,7);
-	kasparov.solve(2,0);
-	System.out.println(kasparov.toString());
-    }
+public static void main(String[] arguments){
+    //I'm trying a 5 x 5 first and starting on [2,2]...because Wikipedia has an animation for that Knight tour.
+    KnightBoard kasparov = new KnightBoard(5,6);
+    //kasparov.solve(1,0);
+    //System.out.println(kasparov.toString());
+    System.out.println(kasparov.countSolutions(2,2));
+}
 }
 
    
