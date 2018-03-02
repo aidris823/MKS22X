@@ -157,7 +157,7 @@ public class KnightBoard{
 	}   
 	
 	if (level == rowSize * colSize/* && board[row][col] == 0*/ ){
-	    board[row][col] = level;
+	    //   board[row][col] = level;
 	    return 1;
 	}
 	int[][] legalMoves = getLegalMoves(row,col);
@@ -215,7 +215,7 @@ public String toString(){
 
 public static void main(String[] arguments){
     //I'm trying a 5 x 5 first and starting on [2,2]...because Wikipedia has an animation for that Knight tour.
-    KnightBoard kasparov = new KnightBoard(5,6);
+    KnightBoard kasparov = new KnightBoard(5,5);
     //kasparov.solve(1,0);
     //System.out.println(kasparov.toString());
     System.out.println(kasparov.countSolutions(2,2));
