@@ -8,15 +8,19 @@ public class Maze{
     private int colCount;
     private boolean animate;
 
-    //Constructor
-    public Maze(String filename){
+    //Constructor:  Loads maze text; sets animate to false by default.
+    public Maze(String filename) throws FileNotFoundException{
+	animate = false;
 	rowCount = 0;
 	try{
 	    File f = new File(filename);
-	    Scanner in;
+	    Scanner in = new Scanner(f);
 	    while (in.hasNext()){
-		String line = in.nextLine);
+		String line = in.nextLine();
 		colCount = line.length();
+		for (int i = 0; i < colCount; i++){
+		    maze[rowCount][i] = line.charAt(i);
+		}
 	    }
 	}
 	catch (FileNotFoundException e){
