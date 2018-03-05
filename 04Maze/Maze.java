@@ -78,6 +78,16 @@ public class Maze{
 	}
 	return (startCount == 1 && endCount == 1);
     }
+    public String toString(){
+	String ans = "";
+	for (int i = 0; i < rowCount; i++){
+	    for (int j = 0; j < colCount; j++){
+		ans += maze[i][j];
+	    }
+	    ans += "\n";
+	}
+	return ans;
+    }
 
     //Precondition: It is a legal board.
     public int solve(){
@@ -124,8 +134,9 @@ public class Maze{
 
     public static void main(String[] arguments){
 	Maze hazy = new Maze("data3.dat");
-	hazy.setAnimate(true);
-	hazy.solve();
+	System.out.println(hazy.toString());
+	//	hazy.setAnimate(true);
+	//	hazy.solve();
 	
     }
 
