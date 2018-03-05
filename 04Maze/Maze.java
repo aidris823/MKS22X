@@ -98,7 +98,7 @@ public class Maze{
 	for (int i = 0; i < rowCount; i++){
 	    for (int j = 0; j < colCount; j++){
 		if (maze[i][j] == 'S'){
-		    maze[i][j] = ' ';
+		    maze[i][j] = '?';
 		    sLocation[0] = i;
 		    sLocation[1] = j;
 		}
@@ -120,8 +120,7 @@ public class Maze{
 	maze[row][col] = '@';	
 	for (int i = 0; i < 4; i++){
 	    if (isLegal(row+dirs[i][0],col+dirs[i][1])){
-		return (solve(row+dirs[i][0],col+dirs[i][1],atCounter+1));
-	    }
+		
 	}
 	maze[row][col] = '.';
 	return -1;
@@ -133,10 +132,12 @@ public class Maze{
     }
 
     public static void main(String[] arguments){
-	Maze hazy = new Maze("data3.dat");
+	Maze hazy = new Maze("data1.dat");
 	System.out.println(hazy.toString());
 	//	hazy.setAnimate(true);
-	//	hazy.solve();
+	hazy.solve();
+	System.out.println(hazy.toString());
+		
 	
     }
 
