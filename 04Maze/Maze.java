@@ -28,11 +28,13 @@ public class Maze{
 	    }
 	    maze = new char[rowCount][colCount];
 	    in = new Scanner(f);
+	    int counter = 0;
 	    while (in.hasNextLine()){
 		String line = in.nextLine();
 		for (int i = 0; i < line.length(); i++){
-		    maze[rowCount-i][i] = line.charAt(i);
+		    maze[counter][i] = line.charAt(i);
 		}
+		counter++;
 	    }	    
 	}
 	catch (FileNotFoundException e){
