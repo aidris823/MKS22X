@@ -13,9 +13,10 @@ public class Maze{
     private boolean animate;
 
     //Constructor:  Loads maze text; sets animate to false by default.
-    public Maze(String filename) throws FileNotFoundException{
+    public Maze(String filename){
 	animate = false;
 	rowCount = 0;
+	colCount = 0;
 	//Source: WordSearch code
 	try{
 	    File f = new File(filename);
@@ -24,10 +25,8 @@ public class Maze{
 		String line = in.nextLine();
 		colCount = line.length();
 		rowCount++;
-		for (int i = 0; i < colCount; i++){
-		    maze[rowCount][i] = line.charAt(i);
-		}
 	    }
+	    maze = new char[rowCount][colCount];
 	}
 	catch (FileNotFoundException e){
 	    System.out.println("File not found: " + filename);
