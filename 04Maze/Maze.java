@@ -27,6 +27,13 @@ public class Maze{
 		rowCount++;
 	    }
 	    maze = new char[rowCount][colCount];
+	    in = new Scanner(f);
+	    while (in.hasNextLine()){
+		String line = in.nextLine();
+		for (int i = 0; i < line.length(); i++){
+		    maze[rowCount-i][i] = line.charAt(i);
+		}
+	    }	    
 	}
 	catch (FileNotFoundException e){
 	    System.out.println("File not found: " + filename);
