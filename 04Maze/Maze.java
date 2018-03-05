@@ -20,7 +20,7 @@ public class Maze{
 	try{
 	    File f = new File(filename);
 	    Scanner in = new Scanner(f);
-	    while (in.hasNext()){
+	    while (in.hasNextLine()){
 		String line = in.nextLine();
 		colCount = line.length();
 		rowCount++;
@@ -31,7 +31,7 @@ public class Maze{
 	}
 	catch (FileNotFoundException e){
 	    System.out.println("File not found: " + filename);
-	    System.out.exit(1);
+	    System.exit(1);
 	}
 	if (!hasStartAndEnd()){
 	    throw new IllegalStateException();
@@ -91,6 +91,11 @@ public class Maze{
     }
     //Helper
     private int solve(int row, int col, int atCounter){
+	if (animate){
+	    clearTerminal();
+	    System.out.println(this);
+	    wait(20);
+	}
 	if (maze[row][col] == 'E'){
 	    return atCounter;
 	}
@@ -100,7 +105,8 @@ public class Maze{
 		return (solve(row+dirs[i][0],col+dirs[i][1],atCounter+1));
 	    }
 	}
-	maze[row][col] = ".";		
+	maze[row][col] = '.';
+	return -1;
     }
 
     //Checks to see if that move does not crash into a wall
@@ -108,7 +114,11 @@ public class Maze{
 	return (maze[row][col] != '#');
     }
 
-    
+    public static void main(String[] arguments){
+	Maze hazy = new Maze("data3.dat");
+	hazy.setAnimate(true);
+	
+    }
 
 	
 
