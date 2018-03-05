@@ -4,6 +4,10 @@ import java.io.*;
 public class Maze{
 
     private char[][] maze;
+    private int[][] dirs = {{0,-1},
+	        		   {0,1},
+				   {-1,0},
+				   {1,0}};
     private int rowCount;
     private int colCount;
     private boolean animate;
@@ -76,18 +80,35 @@ public class Maze{
 	for (int i = 0; i < rowCount; i++){
 	    for (int j = 0; j < colCount; j++){
 		if (maze[i][j] == 'S'){
+		    maze[i][j] = ' ';
 		    sLocation[0] = i;
 		    sLocation[1] = j;
 		}
 	    }
 	}
 
-	return solve(sLocation[0],sLocation[1]);
+	return solve(sLocation[0],sLocation[1],0);
     }
     //Helper
-    private int solve(int row, int col){
-    r
+    private int solve(int row, int col, int atCounter){
+	if (maze[row][col] == 'E'){
+	    return atCounter;
+	}
+	maze[row][col] = '@';	
+	for (int i = 0; i < 4; i++){
+	    if (isLegal(row+dirs[i][0],col+dirs[i][1])){
+		return (solve(row+dirs[i][0],col+dirs[i][1],atCounter+1));
+	    }
+	}
+	maze[row][col] = ".";		
     }
+
+    //Checks to see if that move does not crash into a wall
+    private boolean isLegal(int row, int col){
+	return (maze[row][col] != '#');
+    }
+
+    
 
 	
 
