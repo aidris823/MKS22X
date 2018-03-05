@@ -125,6 +125,7 @@ public class Maze{
     public static void main(String[] arguments){
 	Maze hazy = new Maze("data3.dat");
 	hazy.setAnimate(true);
+	hazy.solve();
 	
     }
 
