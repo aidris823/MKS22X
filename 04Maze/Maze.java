@@ -92,6 +92,7 @@ public class Maze{
     }
 
     //Precondition: It is a legal board.
+  
     public int solve(){
 	//Find location of S."
 	int[] sLocation = new int[2];
@@ -111,6 +112,7 @@ public class Maze{
     //  int numRecursions = 0;
     //Helper
     private int solve(int row, int col, int atCounter){
+
 	//	numRecursions++;
 	/*	System.out.println(numRecursions);
 	System.out.println("Current coordinates: [" + row + ", " + col + "]");
@@ -121,19 +123,25 @@ public class Maze{
 	    System.out.println(this);
 	    wait(20);
 	}
+	/*
 	if (maze[row][col] == 'E'){
+	    //System.out.println(toString());
 	    return atCounter;
 	}
-
+	*/
 	//	maze[row][col] = '@';
 
 	//	maze[row][col] = '@';
       
 	for (int i = 0; i < 4; i++){
 	    if (isLegal(row+dirs[i][0],col+dirs[i][1])){
+		if (maze[row+dirs[i][0]][col+dirs[i][1]] == 'E'){
+		    return atCounter + 1;
+		}
 		maze[row+dirs[i][0]][col+dirs[i][1]] = '@';
-		if (solve(row+dirs[i][0],col+dirs[i][1],atCounter+1) > 0){
-		    return solve(row+dirs[i][0],col+dirs[i][1],atCounter+1);
+		int x = (solve(row+dirs[i][0],col+dirs[i][1],atCounter+1));
+		if (x != -1){
+		    return x;
 		}
 		maze[row+dirs[i][0]][col+dirs[i][1]] = '.';	
 	    }	       
@@ -145,15 +153,17 @@ public class Maze{
     private boolean isLegal(int row, int col){
 	return (row > 0
 		&& row < rowCount - 1 &&
-		col > 0 && col < colCount - 1 && maze[row][col] != '#');
+		col > 0 && col < colCount - 1 && maze[row][col] != '#'
+		&& maze[row][col] != '.' && maze[row][col] != '@');
     }
 
     public static void main(String[] arguments){
 	Maze hazy = new Maze("data1.dat");
 	System.out.println(hazy.toString());
 	hazy.setAnimate(true);
-	hazy.solve();
-	System.out.println(hazy.toString());
+	//	hazy.solve();
+	System.out.println(hazy.solve());
+	//	System.out.println(hazy.toString());
 		
 	
     }
