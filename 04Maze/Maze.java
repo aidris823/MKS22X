@@ -1,6 +1,8 @@
 import java.util.*;
 import java.io.*;
 
+//Code was debugged w/help from Shaina Peters and Taseen Ali
+
 public class Maze{
 
     private char[][] maze;
@@ -158,7 +160,7 @@ public class Maze{
     }
 
     public static void main(String[] arguments){
-	Maze hazy = new Maze("data1.dat");
+	Maze hazy = new Maze("data3.dat");
 	System.out.println(hazy.toString());
 	hazy.setAnimate(true);
 	//	hazy.solve();
