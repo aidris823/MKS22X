@@ -78,6 +78,7 @@ public class Maze{
 	}
 	return (startCount == 1 && endCount == 1);
     }
+    //Prints out the board.
     public String toString(){
 	String ans = "";
 	for (int i = 0; i < rowCount; i++){
@@ -93,12 +94,11 @@ public class Maze{
     public int solve(){
 	//Find location of S."
 	int[] sLocation = new int[2];
-	int numAts = 0;
 	
 	for (int i = 0; i < rowCount; i++){
 	    for (int j = 0; j < colCount; j++){
 		if (maze[i][j] == 'S'){
-		    maze[i][j] = '?';
+		    maze[i][j] = '@';
 		    sLocation[0] = i;
 		    sLocation[1] = j;
 		}
@@ -107,8 +107,14 @@ public class Maze{
 
 	return solve(sLocation[0],sLocation[1],0);
     }
+    int numRecursions = 0;
     //Helper
     private int solve(int row, int col, int atCounter){
+	numRecursions++;
+	System.out.println(numRecursions);
+	System.out.println("Current coordinates: [" + row + ", " + col + "]");
+	System.out.println("Am I currently on a legal square?: " + isLegal(row,col));
+	System.out.println(toString());
 	if (animate){
 	    clearTerminal();
 	    System.out.println(this);
@@ -117,18 +123,33 @@ public class Maze{
 	if (maze[row][col] == 'E'){
 	    return atCounter;
 	}
-	maze[row][col] = '@';	
+
+	//	maze[row][col] = '@';
+      
 	for (int i = 0; i < 4; i++){
 	    if (isLegal(row+dirs[i][0],col+dirs[i][1])){
-		
+		if (row + dirs[i][0] > 0 && col + dirs[i][1] > 0 ){
+		    System.out.println(toString());
+		    maze[row+dirs[i][0]][col+dirs[i][1]] = '@';
+		    System.out.println(toString());
+		}
+		if ((solve(row+dirs[i][0],col+dirs[i][1],atCounter+1)) > 0){
+		    return (solve(row+dirs[i][0],col+dirs[i][1],atCounter+1));
+		}
+		if (maze[row+dirs[i][0]][col+dirs[i][1]] == '@'){
+		    maze[row+dirs[i][0]][col+dirs[i][1]] = '.';
+		}	    
+	    }
 	}
-	maze[row][col] = '.';
+	System.out.println("Safwt");
 	return -1;
     }
 
     //Checks to see if that move does not crash into a wall
     private boolean isLegal(int row, int col){
-	return (maze[row][col] != '#');
+	return (row != 0
+		&& row < rowCount - 1 &&
+		col != 0 && col < colCount - 1 && maze[row][col] != '#');
     }
 
     public static void main(String[] arguments){
