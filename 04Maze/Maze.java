@@ -4,10 +4,11 @@ import java.io.*;
 public class Maze{
 
     private char[][] maze;
-    private int[][] dirs = {{0,-1},
-	        		   {0,1},
-				   {-1,0},
-				   {1,0}};
+    private int[][] dirs = {
+	{0,-1},
+	{0,1},
+	{-1,0},
+	{1,0}};
     private int rowCount;
     private int colCount;
     private boolean animate;
@@ -107,14 +108,14 @@ public class Maze{
 
 	return solve(sLocation[0],sLocation[1],0);
     }
-    int numRecursions = 0;
+    //  int numRecursions = 0;
     //Helper
     private int solve(int row, int col, int atCounter){
-	numRecursions++;
-	System.out.println(numRecursions);
+	//	numRecursions++;
+	/*	System.out.println(numRecursions);
 	System.out.println("Current coordinates: [" + row + ", " + col + "]");
 	System.out.println("Am I currently on a legal square?: " + isLegal(row,col));
-	System.out.println(toString());
+	System.out.println(toString());*/
 	if (animate){
 	    clearTerminal();
 	    System.out.println(this);
@@ -125,37 +126,32 @@ public class Maze{
 	}
 
 	//	maze[row][col] = '@';
+
+	//	maze[row][col] = '@';
       
 	for (int i = 0; i < 4; i++){
 	    if (isLegal(row+dirs[i][0],col+dirs[i][1])){
-		if (row + dirs[i][0] > 0 && col + dirs[i][1] > 0 ){
-		    System.out.println(toString());
-		    maze[row+dirs[i][0]][col+dirs[i][1]] = '@';
-		    System.out.println(toString());
+		maze[row+dirs[i][0]][col+dirs[i][1]] = '@';
+		if (solve(row+dirs[i][0],col+dirs[i][1],atCounter+1) > 0){
+		    return solve(row+dirs[i][0],col+dirs[i][1],atCounter+1);
 		}
-		if ((solve(row+dirs[i][0],col+dirs[i][1],atCounter+1)) > 0){
-		    return (solve(row+dirs[i][0],col+dirs[i][1],atCounter+1));
-		}
-		if (maze[row+dirs[i][0]][col+dirs[i][1]] == '@'){
-		    maze[row+dirs[i][0]][col+dirs[i][1]] = '.';
-		}	    
-	    }
+		maze[row+dirs[i][0]][col+dirs[i][1]] = '.';	
+	    }	       
 	}
-	System.out.println("Safwt");
 	return -1;
     }
 
     //Checks to see if that move does not crash into a wall
     private boolean isLegal(int row, int col){
-	return (row != 0
+	return (row > 0
 		&& row < rowCount - 1 &&
-		col != 0 && col < colCount - 1 && maze[row][col] != '#');
+		col > 0 && col < colCount - 1 && maze[row][col] != '#');
     }
 
     public static void main(String[] arguments){
 	Maze hazy = new Maze("data1.dat");
 	System.out.println(hazy.toString());
-	//	hazy.setAnimate(true);
+	hazy.setAnimate(true);
 	hazy.solve();
 	System.out.println(hazy.toString());
 		
