@@ -1,5 +1,33 @@
 public class USACO{
+
+    private int r, c, e, n;
+    private int[][] lake;
     public static int bronze(String filename){
+	try{
+	    File f = new File(filename);
+	    Scanner in = new Scanner(f);
+	    String line = in.nextLine();
+	    String[] vals = line.split(" ");
+	    r = vals[0];
+	    c = vals[1];
+	    e = vals[2];
+	    n = vals[3];
+	    int counter = 0;
+	    while (counter < r){
+		line = in.nextLine();
+		for (int i = 0; i < line.length(); i++){
+		    lake[counter][i] = Integer.parseInt(line.charAt(i));
+		}
+	    }
+	}
+	catch (FileNotFoundException e){
+	    System.out.println("File not found: " + filename);
+	    System.exit(1);
+	}
+		
+	    
+	    
+	    
     }
     
     public static int silver(String filename){
