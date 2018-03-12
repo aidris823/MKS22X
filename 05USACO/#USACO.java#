@@ -25,10 +25,12 @@ public class USACO{
 	    n = in.nextInt();
 
 	    lake = new int[r][c];
+	    stompy = new int[n][];
 
 	    for (int i = 0; i < r; i++){
 		lake[i] = in.nextLine();
 	    }
+	    
 	    
 	}
 	catch (FileNotFoundException e){
@@ -40,11 +42,12 @@ public class USACO{
 	    
 	    
     }
-    public static void stomp(int r, int c, int d){
-	int max = 0;
-	for (int i = r - 1; i < r + 3; i++){
-	}
-    }
+
+    public void stomp(int r, int c
+
+    public int calcVol(int[][] lake){
+	
+    
     public static int silver(String filename){
 	int[] start;
 	int[] end;
