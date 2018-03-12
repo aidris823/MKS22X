@@ -1,3 +1,6 @@
+import java.util.*;
+import java.io.*;
+
 public class USACO{
 
     private int r, c, e, n;
@@ -8,26 +11,25 @@ public class USACO{
 
        Take input, set up lake, have cows stomp with specific instructions, 
        return the area.  No recursion or anything, just stompy stompy?
+
+     RowCount, ColCount, End Depth, 
     */
     
     public static int bronze(String filename){
 	try{
 	    File f = new File(filename);
 	    Scanner in = new Scanner(f);
-	    String line = in.nextLine();
-	    String[] vals = line.split(" ");
-	    r = vals[0];
-	    c = vals[1];
-	    e = vals[2];
-	    n = vals[3];
-	    
-	    int counter = 0;
-	    while (counter < r){
-		line = in.nextLine();
-		for (int i = 0; i < line.length(); i++){
-		    lake[counter][i] = Integer.parseInt(line.charAt(i));
-		}
+	    r = in.nextInt();
+	    c = in.nextInt();
+	    e = in.nextInt();
+	    n = in.nextInt();
+
+	    lake = new int[r][c];
+
+	    for (int i = 0; i < r; i++){
+		lake[i] = in.nextLine();
 	    }
+	    
 	}
 	catch (FileNotFoundException e){
 	    System.out.println("File not found: " + filename);
