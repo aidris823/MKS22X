@@ -2,6 +2,14 @@ public class USACO{
 
     private int r, c, e, n;
     private int[][] lake;
+    private int[][] stompy;
+
+    /* My understanding:
+
+       Take input, set up lake, have cows stomp with specific instructions, 
+       return the area.  No recursion or anything, just stompy stompy?
+    */
+    
     public static int bronze(String filename){
 	try{
 	    File f = new File(filename);
@@ -12,6 +20,7 @@ public class USACO{
 	    c = vals[1];
 	    e = vals[2];
 	    n = vals[3];
+	    
 	    int counter = 0;
 	    while (counter < r){
 		line = in.nextLine();
