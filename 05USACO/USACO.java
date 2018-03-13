@@ -3,9 +3,7 @@ import java.io.*;
 
 public class USACO{
 
-    private int r, c, e, n;
-    private int[][] lake;
-    private int[][][] stompy;
+
 
     /* My understanding:
 
@@ -19,6 +17,9 @@ public class USACO{
 	try{
 	    File f = new File(filename);
 	    Scanner in = new Scanner(f);
+	    int r, c, e, n;
+	    int[][] lake;
+	    int[][][] stompy;
 	    r = in.nextInt();
 	    c = in.nextInt();
 	    e = in.nextInt();
