@@ -5,7 +5,7 @@ public class USACO{
 
     private int r, c, e, n;
     private int[][] lake;
-    private int[][] stompy;
+    private int[][][] stompy;
 
     /* My understanding:
 
@@ -29,6 +29,9 @@ public class USACO{
 	    for (int i = 0; i < r; i++){
 		lake[i] = in.nextLine();
 	    }
+	    for (int i = 0; i < n; i++){
+		stompy[i] = in.nextLine();
+	    }
 	    
 	}
 	catch (FileNotFoundException e){
@@ -40,11 +43,29 @@ public class USACO{
 	    
 	    
     }
-    public static void stomp(int r, int c, int d){
-	int max = 0;
+    private static void stomp(int r, int c, int d){
+        
 	for (int i = r - 1; i < r + 3; i++){
+	    
 	}
     }
+
+    private boolean isWithinBounds(int row,int col){
+	return row >= 0 && col >= 0 && row < r && col < c;
+    }
+
+    private int[] findMax(int r, int c){
+	int[] max = new int[] {r,c};
+	for (int i = r; i < r + 3; i++){
+	    for (int j = c; j < c + 3; j++){
+		if (isWithinBounds(i,j) && lake[i][j] > max){
+		    max = new int[] {i,j};
+		}
+	    }
+	}
+	return max;
+    }
+    
     public static int silver(String filename){
 	int[] start;
 	int[] end;
