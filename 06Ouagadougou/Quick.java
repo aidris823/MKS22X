@@ -1,6 +1,6 @@
 public class Quick{
     public int partition(int[] data, int start, int end){
-	int pivot = data[start+1];
+	int pivot = Math.random()*((start+end) / 2) / 10 * 10;
 	int x = start + 1;
 	int[] data = new int[end-start];
 	data[0] = pivot;
