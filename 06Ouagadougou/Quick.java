@@ -3,8 +3,9 @@ public class Quick{
     public static int partition(int[] data, int start, int end){
 	/*Used code from here: https://stackoverflow.com/questions/5271598/java-generate-random-number-between-two-given-values 
 after I couldn't think of way to generate number between start and end without 
-lousy conversion thing. */	
-	int pivot = (int) Math.random() * (end-start) + start;
+lousy conversion thing. */
+	Random random = new Random();
+	int pivot = random.nextInt(end - start) + start;
 	// System.out.println("Pivot: " + pivot);
 	int i = pivot + 1;
 	int j = end;
