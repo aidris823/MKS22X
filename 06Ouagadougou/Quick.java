@@ -4,7 +4,7 @@ public class Quick{
 	/*Used code from here: https://stackoverflow.com/questions/5271598/java-generate-random-number-between-two-given-values 
 after I couldn't think of way to generate number between start and end without 
 lousy conversion thing. */	
-	int pivot = (int) Math.random() * end + start;
+	int pivot = (int) Math.random() * (end-start) + start;
 	// System.out.println("Pivot: " + pivot);
 	int i = start + 1;
 	int j = end;
@@ -17,7 +17,7 @@ lousy conversion thing. */
 		j--;
 	    }
 	}
-	swap(data,i,j);
+	swap(data,start,j);
 	return j;				
     }	
     public static void swap(int[] data, int lo, int hi){
