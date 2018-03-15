@@ -1,24 +1,29 @@
 public class Quick{
-    public int partition(int[] data, int start, int end){
-	int pivot = Math.random()*((start+end) / 2) / 10 * 10;
-	int x = start + 1;
-	int[] data = new int[end-start];
-	data[0] = pivot;
-	
-	for (int i = start; i < end; i++){
-	    if (data[i] < pivot){
-		x++;
-	        data[x] = pivot;
-		data[x-1] = data[i];
+    public static int partition(int[] data, int start, int end){
+	int pivot = (int) end - ( Math.random() * start);
+	i = start - 1;
+	int i = start + 1;
+	int j = end;
+	while (i <= j){
+	    if (data[i] < data[start]){
+		i++;
 	    }
-	    if (data[i] > pivot){
-		x--;
-		data[x] = pivot;
-		data[x+1] = data[i];
+	    else{
+		swap(data,i,j);
+		j--;
 	    }
 	}
-	return x;
+	swap(data,i,j);
+	return j;
+		
+		
+	}
+	
     }
+    public static void swap(int[] data, int lo, int hi){
+    }
+    
+	    
 }	
 		
 		
