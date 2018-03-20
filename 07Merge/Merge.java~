@@ -17,8 +17,5 @@ public class Merge{
 	}
     }
 
-    public static int calcMidpoint(int[] data){
-	if (data.length % 2 == 0)
-	    
-    }
+    public 
        
