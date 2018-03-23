@@ -1,4 +1,4 @@
-import java.util.Arrays;
+import java.util.*;
 public class Quick{
     public static int partition(int[] data, int start, int end){
 	/*Used code from here: https://stackoverflow.com/questions/5271598/java-generate-random-number-between-two-given-values 
