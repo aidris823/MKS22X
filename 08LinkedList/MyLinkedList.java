@@ -1,13 +1,19 @@
 //Je suis un pomme de terre.
-public class LinkedList implements List{
+public class MyLinkedList implements List{
     private Node start, end;
     private int size;
 
-    public boolean add(int i){
+    public Linked
+
+    public boolean add(int val){
 	
     }
     private Node getNode(int i){
     }
+    public void add(int i, int val){
+    }
+    
+    
     
 }
 
