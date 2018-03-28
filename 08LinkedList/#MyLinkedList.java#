@@ -17,6 +17,7 @@ public class MyLinkedList implements List{
 	size -= 1;
     }
     private Node getNode(int i){
+	
     }
     public void add(int i, int val){
     }
