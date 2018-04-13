@@ -1,4 +1,4 @@
-public class MyLinkedListImproved{
+public class MyLinkedListImproved<T>{
     
     private Node start, end;
     private int size;
@@ -17,7 +17,7 @@ public class MyLinkedListImproved{
 	return null;
     }
 
-    public MyLinkedList(){
+    public MyLinkedListImproved(){
 	clear();
     }
 
@@ -49,7 +49,7 @@ public class MyLinkedListImproved{
 	return size;
     }
 
-    public Integer get(int index){
+    public T get(int index){
 	//EXCEPTIONS!
 	if (index < 0){
 	    throw new IndexOutOfBoundsException("Too small.");
@@ -61,7 +61,7 @@ public class MyLinkedListImproved{
 	return x.getValue();
     }
 
-    public Integer set(int index, Integer value){
+    public T set(int index, T value){
 	//EXCEPTIONS!
 	if (index < 0){
 	    throw new IndexOutOfBoundsException("Too small.");
@@ -69,7 +69,7 @@ public class MyLinkedListImproved{
 	if (index >= size){
 	    throw new IndexOutOfBoundsException("Too big!");
 	}
-	Integer oldVal = new Integer(getNode(index).getValue());
+	T oldVal = new T(getNode(index).getValue());
 	Node currentNode = start;
 	for (int i = 0; i < index; i++){
 	    currentNode = currentNode.getNext();
@@ -78,7 +78,7 @@ public class MyLinkedListImproved{
 	return oldVal;
     }
 
-    public int indexOf(Integer value){
+    public int indexOf(T value){
 	int counter = 0;
 	Node currentNode = start;
 	while (!currentNode.getValue().equals(value)){
@@ -94,7 +94,7 @@ public class MyLinkedListImproved{
     }
 
     //Adds to end pretty sure, from documentation
-    public boolean add(Integer newData){
+    public boolean add(T newData){
 	Node x = new Node(newData);
 	if (size == 0){
 	    start = x;
@@ -109,7 +109,7 @@ public class MyLinkedListImproved{
 	return true;
     }
 
-    public void add(int index, Integer value){
+    public void add(int index, T value){
 	//EXCEPTIONS!
 	if (index < 0){
 	    throw new IndexOutOfBoundsException("Too small.");
@@ -142,7 +142,7 @@ public class MyLinkedListImproved{
     }
 
     //Goes through entire data structure
-    public boolean remove(Integer value){
+    public boolean remove(T value){
 
 	if (indexOf(value) == -1){
 	    return false;
@@ -167,13 +167,13 @@ public class MyLinkedListImproved{
 	/*We forget about the element at this index faster than...
 	  someone giving the silent treatment? */
 	if (index == 0){
-	    Integer oldValue = new Integer(start.getValue());
+	    T oldValue = new T(start.getValue());
 	    start = start.getNext();
 	    start.setPrev(null);
 	    return oldValue;
 	}
 	if (index == size - 1){
-	    Integer oldValue = new Integer(end.getValue());
+	    T oldValue = new T(end.getValue());
 	    end = end.getPrev();
 	    end.setNext(null);
 	    
