@@ -3,9 +3,12 @@ public class MyLinkedListImproved<T extends Comparable<T>> implements Iterable<T
     
     private Node start, end;
     private int size;
-    
+
+    public Iterator<T> iterator(){
+	return new LLIterator(start);
+    }
     //c+p'ed superarray (mostly)
-    private class LLIterator implements Iterator<T>{
+    public class LLIterator implements Iterator<T>{
 	//Where next is: (Bad naming)
 	Node current;
 	
@@ -25,7 +28,7 @@ public class MyLinkedListImproved<T extends Comparable<T>> implements Iterable<T
 		throw new UnsupportedOperationException();
 	    }
 	    //AKA current
-	    return current.getPrev();
+	    return current.getPrev().getValue();
 	}	
     }
     public int max(){
@@ -36,8 +39,7 @@ public class MyLinkedListImproved<T extends Comparable<T>> implements Iterable<T
 	Node max = current;
 	while (current != null){
 	    //CompareTo bc. Integer class
-	    int val = current.getValue();
-	    if (val.compareTo(max.getValue()) >= 0){
+	    if (current.getValue().compareTo(max.getValue()) >= 0){
 		max = current;
 	    }
 	    current = current.getNext();
@@ -53,8 +55,7 @@ public class MyLinkedListImproved<T extends Comparable<T>> implements Iterable<T
 	Node min = current;
 	while (current != null){
 	    //CompareTo bc. Integer class
-	    int val = current.getValue();
-	    if (val.compareTo(max.getValue()) <= 0){
+	    if (current.getValue().compareTo(min.getValue()) <= 0){
 		min = current;
 	    }
 	    current = current.getNext();
@@ -136,7 +137,7 @@ public class MyLinkedListImproved<T extends Comparable<T>> implements Iterable<T
 	if (index >= size){
 	    throw new IndexOutOfBoundsException("Too big!");
 	}
-	T oldVal = new T(getNode(index).getValue());
+	T oldVal = getNode(index).getValue();
 	Node currentNode = start;
 	for (int i = 0; i < index; i++){
 	    currentNode = currentNode.getNext();
@@ -219,7 +220,7 @@ public class MyLinkedListImproved<T extends Comparable<T>> implements Iterable<T
 	
     }
 
-    public Integer remove(int index){
+    public T remove(int index){
 	//SHould always be able to remove if the exceptions don't catch it, , so always returns true I think.
 	//EXCEPTIONS!
 	if (index < 0){
@@ -229,21 +230,21 @@ public class MyLinkedListImproved<T extends Comparable<T>> implements Iterable<T
 	    throw new IndexOutOfBoundsException("TOO BIG!");
 	}
 	//	Integer oldValue = new Integer(getNode(index).getValue());
+	Node oldNode = getNode(index);
 	Node currentNode = getNode(index);
 	
 	/*We forget about the element at this index faster than...
 	  someone giving the silent treatment? */
 	if (index == 0){
-	    T oldValue = new T(start.getValue());
+	    T oldValue = start.getValue();
 	    start = start.getNext();
 	    start.setPrev(null);
 	    return oldValue;
 	}
 	if (index == size - 1){
-	    T oldValue = new T(end.getValue());
+	    T oldValue = end.getValue();
 	    end = end.getPrev();
-	    end.setNext(null);
-	    
+	    end.setNext(null);	    
 	}
 	else{
 	    //CurrentNode: "Doooon't forget me, I beeeeeeeeg"
@@ -251,14 +252,14 @@ public class MyLinkedListImproved<T extends Comparable<T>> implements Iterable<T
 	    currentNode.getNext().setPrev(currentNode.getPrev());
 	}
 	size--;
-	return currentNode.getValue();
+	return oldNode.getValue();
     }
 	
 
     //Node class:
 
     private class Node{
-	private Integer value;
+	private T value;
 	private Node prev, next;
 	
 	public Node(){
@@ -266,7 +267,7 @@ public class MyLinkedListImproved<T extends Comparable<T>> implements Iterable<T
 	    next = null;
 	}
 	
-	public Node(Integer val){
+	public Node(T val){
 	    value = val;
 	    prev = null;
 	    next = null;
@@ -278,7 +279,7 @@ public class MyLinkedListImproved<T extends Comparable<T>> implements Iterable<T
 	public Node getNext(){
 	    return next;
 	}
-	public Integer getValue(){
+	public T getValue(){
 	    return value;
 	}
 	public void setPrev(Node prev){
@@ -287,7 +288,7 @@ public class MyLinkedListImproved<T extends Comparable<T>> implements Iterable<T
 	public void setNext(Node next){
 	    this.next = next;
 	}
-	public void setValue(Integer value){
+	public void setValue(T value){
 	    this.value = value;
 	}
 	public String toString(){
