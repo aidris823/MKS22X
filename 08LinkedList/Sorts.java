@@ -9,10 +9,24 @@ public class Sorts{
 	    bucket[i] = new MyLinkedListImproved<Integer>();
 	}
 
-	int max = data.max();
-	int numRuns = (max + "").length();
-
+	int numRuns = (data.max() + "").length();
+	//	int i = 0;
+	for (int i = 0; i < numRuns; i++){
+	    for (Integer in : data){
+		int placeVal = (int)Math.pow(10,i);
+		int digit = (x / placeVal) % 10;
+		bucket[digit].add(in);
+	    }
+	}
+	data.clear();
+	for (int i = 0; i < 10; i++){
+	    data.extend(bucket[i]);
+	}
+	
 	    
+    }
+    public static void radixsortIncludingNegatives(MyLinkedListImproved<Integer>data){
+	return;
     }
 }
 	
