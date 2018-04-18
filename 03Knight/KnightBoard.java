@@ -216,9 +216,9 @@ public String toString(){
 public static void main(String[] arguments){
     //I'm trying a 5 x 5 first and starting on [2,2]...because Wikipedia has an animation for that Knight tour.
     KnightBoard kasparov = new KnightBoard(5,5);
-    //kasparov.solve(1,0);
-    //System.out.println(kasparov.toString());
-    System.out.println(kasparov.countSolutions(2,2));
+    kasparov.solve(0,0);
+    System.out.println(kasparov.toString());
+    // System.out.println(kasparov.countSolutions(0,1));
 }
 }
 
