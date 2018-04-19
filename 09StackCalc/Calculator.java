@@ -5,6 +5,9 @@ public class Calculator{
 	String[] tokens = s.split(" ");
 	Stack stack = new Stack();
 	for (int i = 0; i < tokens.length; i++){
+	    stack.push(tokens[i]);
+	}
+	for (int i = 0; i < tokens.length; i++){
 	    if (tokens[i].equals("+")){
 		stack.push("" + (stack.pop() + stack.pop()));
 	    }
@@ -18,10 +21,10 @@ public class Calculator{
 		stack.push("" + (stack.pop() / stack.pop()));
 	    }
 	    if (tokens[i].equals("%")){
-		stack.push("" + (stack.pop() + stack.pop()));
+		stack.push("" + (stack.pop() % stack.pop()));
 	    }
 	}
-	return Double.parseDouble(stack.getFirstVal());
+	return Double.parseDouble(stack.peek(0));
     }
 
     private static class Stack{
@@ -34,13 +37,13 @@ public class Calculator{
 	    stack.remove(stack.size()-1);
 	    return Double.parseDouble(val);
 	}
-	public String getFirstVal(){
-	    return stack.get(0);
+	public String peek(int x){
+	    return stack.get(x);
 	}
     }
 	
     public static void main(String[] arguments){
-	System.out.println(Calculator.eval("299.792458 6666 +"));
+	System.out.println(Calculator.eval("299.792458 666 +"));
 	System.out.println(Calculator.eval("10 2.0 +"));
 	System.out.println(Calculator.eval("11 3 - 4 + 2.5 *"));
 	System.out.println(Calculator.eval("8 2 + 99 9 - * 2 + 9 -"));
