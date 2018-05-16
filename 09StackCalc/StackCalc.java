@@ -1,5 +1,5 @@
 import java.util.ArrayList;
-public class Calculator{
+public class StackCalc{
     public static double eval(String s){
 	double ans = 0;
 	String[] tokens = s.split(" ");
