@@ -1,8 +1,0 @@
-public class Calculator{
-
-    public static double eval(String s){
-	double ans = 0;
-	String[][] runThru = new String[s.length()][3];
-	
-    }
-    
